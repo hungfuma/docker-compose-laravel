@@ -31,11 +31,13 @@ services:
     tty: true
     ports:
       - 3306:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: homestead
-      MYSQL_USER: homestead
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: pass
+      MYSQL_ROOT_PASSWORD: pass
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     networks:
@@ -60,6 +62,8 @@ services:
     restart: unless-stopped
     ports:
       - 6379:6379
+    volumes:
+      - ./redis:/data
     networks:
       - laravel
 
@@ -82,7 +86,7 @@ services:
       - laravel
 
   npm:
-    image: node:13.7
+    image: node:14-alpine
     container_name: npm
     volumes:
       - ./src:/var/www/html
